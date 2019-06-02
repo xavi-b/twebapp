@@ -1,6 +1,20 @@
 version: "3"
 
 services:
+    front:
+        build:
+            context: .
+            dockerfile: Dockerfile.front
+        volumes:
+            - './front:/app'
+            - '/app/node_modules'
+        networks:
+            - twebapp
+        ports:
+            - '30001:3000'
+        environment:
+            - NODE_ENV=development
+
     back:
         image: node:12
         volumes:
