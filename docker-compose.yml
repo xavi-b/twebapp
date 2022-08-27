@@ -5,7 +5,7 @@ services:
         build:
             context: .
             dockerfile: Dockerfile.front
-        restart: always
+        restart: unless-stopped
         volumes:
             - './front:/app'
             - '/app/node_modules'
@@ -15,10 +15,11 @@ services:
             - '30001:3000'
         environment:
             - NODE_ENV=development
+            - SASS_PATH=/app/node_modules
 
     back:
         image: node:12
-        restart: always
+        restart: unless-stopped
         volumes:
             - ./back:/usr/src/app
             - /usr/src/app/node_modules
@@ -31,7 +32,7 @@ services:
 
     postgres:
         image: postgres
-        restart: always
+        restart: unless-stopped
         environment:
             POSTGRES_PASSWORD: example
         networks:
